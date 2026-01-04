@@ -5,7 +5,7 @@ date_Default_timezone_set('Asia/Tashkent');
 
 
 
-$bot_token = "8589253414:AAFrmObAuHIg703-8J__SajaWnaFdszqzcA"; // bot token
+$bot_token = "8589253414:AAEJdsGBR69w4VUtQIRRZagPK385qAURR_o"; // bot token
 
 define('API_KEY',$bot_token);
 $obito_us = "8244870375"; // admin_id
@@ -3376,3 +3376,4 @@ bot('sendMessage',[
 
 
 //<---- @obito_us ---->//
+
