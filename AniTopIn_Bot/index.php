@@ -1,102 +1,87 @@
+<?php
+/*--- BOT QISMI (Telegram xabarlarini qabul qiladi) ---*/
+
+// 1. Ma'lumotlar bazasi ma'lumotlari
+$host = "gondola.proxy.rlwy.net";
+$user = "root";
+$pass = "qrNCyVGeNPfJGzHGkDRrzZvuzYIdFcbD";
+$db = "railway";
+$port = 37280;
+
+$connect = mysqli_connect($host, $user, $pass, $db, $port);
+
+// 2. Bot tokeni
+define('API_KEY', '8589253414:AAFrmObAuHIg703-8J__SajaWnaFdszqzcA');
+
+function bot($method, $datas = []){
+    $url = "https://api.telegram.org/bot".API_KEY."/".$method;
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $datas);
+    $res = curl_exec($ch);
+    return json_decode($res);
+}
+
+// 3. Kelayotgan xabarlarni qabul qilish
+$update = json_decode(file_get_contents('php://input'));
+
+if (isset($update->message)) {
+    $message = $update->message;
+    $chat_id = $message->chat->id;
+    $text = $message->text;
+    $name = $message->from->first_name;
+    $user_id = $message->from->id;
+
+    // Foydalanuvchini bazaga qo'shish
+    $check = mysqli_query($connect, "SELECT * FROM user_id WHERE user_id = '$user_id'");
+    if (mysqli_num_rows($check) == 0) {
+        $sana = date("d.m.Y H:i:s");
+        mysqli_query($connect, "INSERT INTO user_id (user_id, status, refid, sana) VALUES ('$user_id', 'user', '0', '$sana')");
+        mysqli_query($connect, "INSERT INTO kabinet (user_id, pul, ban) VALUES ('$user_id', '0', 'active')");
+    }
+
+    if ($text == "/start") {
+        bot('sendMessage', [
+            'chat_id' => $chat_id,
+            'text' => "<b>Salom $name!</b>\n\nAniNowuz botingiz muvaffaqiyatli ishga tushdi! 🎉",
+            'parse_mode' => 'html'
+        ]);
+    }
+    // Bu yerda bot kodini tugatdik, die() qilmasak pastdagi HTML ham Telegramga ketib qolishi mumkin
+    exit(); 
+}
+
+/*--- VIZUAL QISM (Brauzerda ochilganda ko'rinadigan qism) ---*/
+?>
 <!DOCTYPE html>
 <html lang="uz">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Saytingiz tayyor!</title>
+  <title>Bot Serveri Ishlamoqda</title>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
     body {
       height: 100vh;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #6e8efb, #a777e3);
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #1e3c72, #2a5298);
       color: white;
       display: flex;
       align-items: center;
       justify-content: center;
       text-align: center;
-      overflow: hidden;
-      position: relative;
+      margin: 0;
     }
-
-    .logo {
-      position: absolute;
-      top: 20px;
-      left: 20px;
-    }
-
-    .logo img {
-      height: 40px;
-      opacity: 0.9;
-    }
-
-    .container {
-      animation: fadeIn 2s ease-in-out;
-      padding: 20px;
-    }
-
-    h1 {
-      font-size: 48px;
-      margin-bottom: 20px;
-      animation: slideIn 1.2s ease-in-out;
-    }
-
-    p {
-      font-size: 20px;
-      max-width: 600px;
-      margin: auto;
-      animation: fadeIn 2.4s ease-in-out;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: scale(0.95); }
-      to { opacity: 1; transform: scale(1); }
-    }
-
-    @keyframes slideIn {
-      from { transform: translateY(-30px); opacity: 0; }
-      to { transform: translateY(0); opacity: 1; }
-    }
-
-    .pulse {
-      margin-top: 40px;
-      display: inline-block;
-      padding: 12px 25px;
-      font-size: 18px;
-      background: rgba(255, 255, 255, 0.15);
-      border: 2px solid white;
-      border-radius: 50px;
-      color: white;
-      text-decoration: none;
-      animation: pulse 2s infinite;
-      transition: all 0.3s ease;
-    }
-
-    .pulse:hover {
-      background: white;
-      color: #6e8efb;
-    }
-
-    @keyframes pulse {
-      0% { transform: scale(1); opacity: 1; }
-      50% { transform: scale(1.05); opacity: 0.85; }
-      100% { transform: scale(1); opacity: 1; }
-    }
+    .container { padding: 20px; }
+    h1 { font-size: 40px; }
+    .status { color: #00ff00; font-weight: bold; }
   </style>
 </head>
 <body>
-<div class="logo">
-    <img src="https://goxost.net/public/assets/images/brand-logos/desktop-dark.png" alt="GoXost Logo">
-  </div>
   <div class="container">
-    <h1>user17.hostx.uz domeni ulandi! 🎉</h1>
-    <p>Bu sahifa avtomatik tarzda yaratildi. Sizning user17.hostx.uz domeningiz tizimga ulandi. Endi siz o'z loyixalaringizni ushbu domenda ishga tushurishingiz mumkin.</p>
-    <a class="pulse" href="https://goxost.net">Bosh sahifaga qaytish</a>
+    <h1>AniNowuz Bot Serveri 🎉</h1>
+    <p>Botingiz hozirda <span class="status">ON-LINE</span> holatda!</p>
+    <p>Webhook manzili: <code>https://aninowuz-bot.onrender.com/index.php</code></p>
   </div>
 </body>
 </html>
