@@ -11,7 +11,7 @@ $port = 37280;
 $connect = mysqli_connect($host, $user, $pass, $db, $port);
 
 // 2. Bot tokeni
-define('API_KEY', '8589253414:AAFrmObAuHIg703-8J__SajaWnaFdszqzcA');
+define('API_KEY', '8589253414:AAEJdsGBR69w4VUtQIRRZagPK385qAURR_o');
 
 function bot($method, $datas = []){
     $url = "https://api.telegram.org/bot".API_KEY."/".$method;
