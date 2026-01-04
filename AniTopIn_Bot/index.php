@@ -2,7 +2,6 @@
 ob_start();
 error_reporting(0);
 date_Default_timezone_set('Asia/Tashkent');
-
 // 1. MA'LUMOTLAR BAZASI (Railway) - sql.php o'rniga
 $host = "gondola.proxy.rlwy.net";
 $user = "root";
