@@ -2,9 +2,16 @@
 ob_start();
 error_reporting(0);
 date_Default_timezone_set('Asia/Tashkent');
+// 1. MA'LUMOTLAR BAZASI (Railway) - sql.php o'rniga
+$host = "gondola.proxy.rlwy.net";
+$user = "root";
+$pass = "qrNCyVGeNPfJGzHGkDRrzZvuzYIdFcbD";
+$db = "railway";
+$port = 37280;
 
+$connect = mysqli_connect($host, $user, $pass, $db, $port);
 
-
+//token sozlamalari
 $bot_token = "8589253414:AAEJdsGBR69w4VUtQIRRZagPK385qAURR_o"; // bot token
 
 define('API_KEY',$bot_token);
@@ -3376,4 +3383,5 @@ bot('sendMessage',[
 
 
 //<---- @obito_us ---->//
+
 
