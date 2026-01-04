@@ -1,15 +1,25 @@
 <?php
-$servername = "gondola.proxy.rlwy.net";
-$username = "root";
-$password = "qrNCyVGeNPfJGzHGkDRrzZvuzYIdFcbD";
-$dbname = "railway"; 
+
+$host = "gondola.proxy.rlwy.net";
+$user = "root";
+$pass = "qrNCyVGeNPfJGzHGkDRrzZvuzYIdFcbD";
+$db = "railway";
 $port = 37280;
 
-$connect = mysqli_connect($servername, $username, $password, $dbname, $port);
+$connect = mysqli_connect($host, $user, $pass, $db, $port);
 
 if (!$connect) {
-    die("Ulanishda xatolik: " . mysqli_connect_error());
+    die("Ulanishda xato: " . mysqli_connect_error());
 }
+
+// Jadvallarni yaratish (TEXT uchun DEFAULT ishlatilmasin)
+mysqli_query($connect, "CREATE TABLE IF NOT EXISTS `kabinet` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` varchar(250) NOT NULL,
+  `pul` varchar(250) DEFAULT '0',
+  `ban` varchar(20) DEFAULT 'active',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;");
 
 // 1. Foydalanuvchilar jadvali
 mysqli_query($connect,"CREATE TABLE IF NOT EXISTS `user_id` (
@@ -67,3 +77,4 @@ mysqli_query($connect,"CREATE TABLE IF NOT EXISTS `kabinet` (
 
 echo "Baza va barcha 5 ta jadval muvaffaqiyatli sozlandi!";
 ?>
+
