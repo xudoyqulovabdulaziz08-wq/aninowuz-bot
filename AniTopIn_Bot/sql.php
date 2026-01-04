@@ -1,10 +1,11 @@
 <?php
-$servername = "mysql.railway.internal";
+$servername = "gondola.proxy.rlwy.net";
 $username = "root";
 $password = "qrNCyVGeNPfJGzHGkDRrzZvuzYIdFcbD";
 $dbname = "railway"; 
+$port = 37280;
 
-$connect = mysqli_connect($servername, $username, $password, $dbname);
+$connect = mysqli_connect($servername, $username, $password, $dbname, $port);
 
 if (!$connect) {
     die("Ulanishda xatolik: " . mysqli_connect_error());
@@ -64,4 +65,5 @@ mysqli_query($connect,"CREATE TABLE IF NOT EXISTS `kabinet` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;");
 
 echo "Baza va barcha 5 ta jadval muvaffaqiyatli sozlandi!";
+
 ?>
