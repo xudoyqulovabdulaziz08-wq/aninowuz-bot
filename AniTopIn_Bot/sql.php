@@ -21,7 +21,7 @@ mysqli_query($connect,"CREATE TABLE IF NOT EXISTS `user_id` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;");
 
-// 2. Anime qismlari (fayllari) jadvali
+// 2. Anime qismlari
 mysqli_query($connect,"CREATE TABLE IF NOT EXISTS `anime_datas` (
   `data_id` int(11) NOT NULL AUTO_INCREMENT,
   `id` text NOT NULL,
@@ -31,7 +31,7 @@ mysqli_query($connect,"CREATE TABLE IF NOT EXISTS `anime_datas` (
   PRIMARY KEY (`data_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;");
 
-// 3. Animelar haqida ma'lumot jadvali
+// 3. Animelar jadvali
 mysqli_query($connect,"CREATE TABLE IF NOT EXISTS `animelar` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nom` text NOT NULL,
@@ -47,7 +47,7 @@ mysqli_query($connect,"CREATE TABLE IF NOT EXISTS `animelar` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;");
 
-// 4. Admin paneli uchun xabar yuborish jadvali
+// 4. Send jadvali
 mysqli_query($connect,"CREATE TABLE IF NOT EXISTS `send` (
   `send_id` int(11) NOT NULL,
   `step` text NOT NULL,
@@ -55,15 +55,15 @@ mysqli_query($connect,"CREATE TABLE IF NOT EXISTS `send` (
   PRIMARY KEY(`send_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;");
 
-// 5. Foydalanuvchi balansi va ban holati
+// 5. Kabinet jadvali - TUZATILGAN QISMI:
+// ban ustunini VARCHAR qildik, shunda DEFAULT ishlaydi
 mysqli_query($connect,"CREATE TABLE IF NOT EXISTS `kabinet` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` varchar(250) NOT NULL,
   `pul` varchar(250) DEFAULT '0',
-  `ban` text DEFAULT 'active',
+  `ban` varchar(250) DEFAULT 'active', 
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;");
 
 echo "Baza va barcha 5 ta jadval muvaffaqiyatli sozlandi!";
-
 ?>
