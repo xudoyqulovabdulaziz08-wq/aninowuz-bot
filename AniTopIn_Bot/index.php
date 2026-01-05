@@ -1,7 +1,7 @@
 <?php
 ob_start();
 error_reporting(0);
-date_Default_timezone_set('Asia/Tashkent');
+date_default_timezone_set('Asia/Tashkent');
 
 
 
